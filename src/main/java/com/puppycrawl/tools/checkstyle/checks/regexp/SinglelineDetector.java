@@ -62,6 +62,11 @@ class SinglelineDetector {
         resetState();
         int lineNo = 0;
         for (int index = 0; index < fileText.size(); index++) {
+            if (currentMatches - options.getMaximum() >= options.getMaxNumberOfViolationsLogged()) {
+                //The number of logged violations is >= the max
+                // number of violations allowed to be logged
+                break;
+            }
             final String line = fileText.get(index);
             lineNo++;
             checkLine(lineNo, line, options.getPattern().matcher(line), 0);

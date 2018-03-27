@@ -121,6 +121,24 @@ public class RegexpMultilineCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testMaxNumberOfViolationsLogged() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RegexpMultilineCheck.class);
+        checkConfig.addAttribute("format", "\\r\\n");
+        checkConfig.addAttribute("maxNumberOfViolationsLogged", "2");
+        final String[] expected = {
+            "1: " + getCheckMessage(MSG_REGEXP_EXCEEDED, "\\r\\n"),
+            "2: " + getCheckMessage(MSG_REGEXP_EXCEEDED, "\\r\\n"),
+        };
+
+        final File file = temporaryFolder.newFile();
+        final String fileContent = "first line \r\n second line \r\n third \r\n fourth \r\n fifth";
+        Files.write(file.toPath(),
+                fileContent.getBytes(StandardCharsets.UTF_8));
+
+        verify(checkConfig, file.getPath(), expected);
+    }
+
+    @Test
     public void testMaximum() throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(RegexpMultilineCheck.class);
         checkConfig.addAttribute("format", "\\r");

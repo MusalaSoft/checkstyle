@@ -54,6 +54,33 @@ public class RegexpSinglelineCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testMaxNumberOfViolationsLogged() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RegexpSinglelineCheck.class);
+        checkConfig.addAttribute("format", "public");
+        checkConfig.addAttribute("maxNumberOfViolationsLogged", "4");
+        checkConfig.addAttribute("message", "public access modifier found");
+        final String[] expected = {
+            "116: public access modifier found", "118: public access modifier found",
+            "124: public access modifier found", "126: public access modifier found",
+        };
+        verify(checkConfig, getPath("InputRegexpSinglelineSemantic.java"), expected);
+    }
+
+    @Test
+    public void testMaxNumberOfViolationsLoggedWhenMaxIsSet() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RegexpSinglelineCheck.class);
+        checkConfig.addAttribute("format", "public");
+        checkConfig.addAttribute("maximum", "2");
+        checkConfig.addAttribute("maxNumberOfViolationsLogged", "3");
+        checkConfig.addAttribute("message", "public access modifier found");
+        final String[] expected = {
+            "124: public access modifier found", "126: public access modifier found",
+            "132: public access modifier found",
+        };
+        verify(checkConfig, getPath("InputRegexpSinglelineSemantic.java"), expected);
+    }
+
+    @Test
     public void testMessageProperty()
             throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(RegexpSinglelineCheck.class);

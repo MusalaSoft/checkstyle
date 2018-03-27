@@ -53,6 +53,8 @@ public final class DetectorOptions {
     private MatchSuppressor suppressor;
     /** Pattern created from format. Lazily initialized. */
     private Pattern pattern;
+    /** Maximum number of violations to be logged. */
+    private int maxNumberOfViolationsLogged = Integer.MAX_VALUE;
 
     /** Default constructor.*/
     private DetectorOptions() { }
@@ -103,6 +105,14 @@ public final class DetectorOptions {
      */
     public int getMaximum() {
         return maximum;
+    }
+
+    /**
+     * The maximum number of violations to log.
+     * @return the maximum number of violations to log.
+     */
+    public int getMaxNumberOfViolationsLogged() {
+        return maxNumberOfViolationsLogged;
     }
 
     /**
@@ -218,6 +228,17 @@ public final class DetectorOptions {
          */
         public Builder suppressor(MatchSuppressor val) {
             suppressor = val;
+            return this;
+        }
+
+        /**
+         * Specifies the max number of violations to be logged and returns Builder object.
+         * @param val the max number of violations to be logged.
+         * @return current instance
+         * @noinspection ReturnOfInnerClass
+         */
+        public Builder maxNumberOfViolationsLogged(int val) {
+            maxNumberOfViolationsLogged = val;
             return this;
         }
 

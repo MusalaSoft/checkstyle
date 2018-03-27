@@ -97,6 +97,10 @@ class MultilineDetector {
             while (foundMatch) {
                 currentMatches++;
                 if (currentMatches > options.getMaximum()) {
+                    final int loggedViolations = currentMatches - options.getMaximum() - 1;
+                    if (loggedViolations >= options.getMaxNumberOfViolationsLogged()) {
+                        break;
+                    }
                     final LineColumn start = text.lineColumn(matcher.start());
                     if (options.getMessage().isEmpty()) {
                         options.getReporter().log(start.getLine(),

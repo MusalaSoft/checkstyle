@@ -40,9 +40,10 @@ public class RegexpSinglelineCheck extends AbstractFileSetCheck {
     private int maximum;
     /** Whether to ignore case when matching. */
     private boolean ignoreCase;
-
     /** The detector to use. */
     private SinglelineDetector detector;
+    /** The max number of violations to be logged. */
+    private int maxNumberOfViolationsLogged = Integer.MAX_VALUE;
 
     @Override
     public void beginProcessing(String charset) {
@@ -54,6 +55,7 @@ public class RegexpSinglelineCheck extends AbstractFileSetCheck {
             .minimum(minimum)
             .maximum(maximum)
             .ignoreCase(ignoreCase)
+            .maxNumberOfViolationsLogged(maxNumberOfViolationsLogged)
             .build();
         detector = new SinglelineDetector(options);
     }
@@ -103,4 +105,11 @@ public class RegexpSinglelineCheck extends AbstractFileSetCheck {
         this.ignoreCase = ignoreCase;
     }
 
+    /**
+     * Sets the maximum number of violations to be logged.
+     * @param maxNumberOfViolationsLogged the maximum number of violations to be logged.
+     */
+    public void setMaxNumberOfViolationsLogged(int maxNumberOfViolationsLogged) {
+        this.maxNumberOfViolationsLogged = maxNumberOfViolationsLogged;
+    }
 }

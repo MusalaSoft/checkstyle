@@ -42,6 +42,8 @@ public class RegexpMultilineCheck extends AbstractFileSetCheck {
     private int maximum;
     /** Whether to ignore case when matching. */
     private boolean ignoreCase;
+    /** The max number of violations to be logged. */
+    private int maxNumberOfViolationsLogged = Integer.MAX_VALUE;
 
     /** The detector to use. */
     private MultilineDetector detector;
@@ -56,6 +58,7 @@ public class RegexpMultilineCheck extends AbstractFileSetCheck {
             .minimum(minimum)
             .maximum(maximum)
             .ignoreCase(ignoreCase)
+            .maxNumberOfViolationsLogged(maxNumberOfViolationsLogged)
             .build();
         detector = new MultilineDetector(options);
     }
@@ -105,4 +108,11 @@ public class RegexpMultilineCheck extends AbstractFileSetCheck {
         this.ignoreCase = ignoreCase;
     }
 
+    /**
+     * Sets the maximum number of violations to be logged.
+     * @param maxNumberOfViolationsLogged the maximum number of violations to be logged.
+     */
+    public void setMaxNumberOfViolationsLogged(int maxNumberOfViolationsLogged) {
+        this.maxNumberOfViolationsLogged = maxNumberOfViolationsLogged;
+    }
 }
